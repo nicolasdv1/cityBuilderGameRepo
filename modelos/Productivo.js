@@ -3,11 +3,10 @@ import { Edificio } from "./Edificio.js";
 export class Productivo extends Edificio{
     #empleados;
 
-    constructor(id, costo, costoMantenimiento,
-                consumoElectricidad, consumoAgua) {
+    constructor({id, costo, costoMantenimiento,
+                consumoElectricidad, consumoAgua}) {
                 
-        super(id, costo, costoMantenimiento, consumoElectricidad, consumoAgua);
-        
+        super({id, costo, costoMantenimiento, consumoElectricidad, consumoAgua});
         this.#empleados = [];
     }
 

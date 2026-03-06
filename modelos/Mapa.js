@@ -10,9 +10,9 @@ export class Mapa{
         this.ancho = ancho;
         this.largo = largo;
         
-        //crea un arreglo bidimensional alto * ancho relleno de null
+        //crea un arreglo bidimensional alto * ancho relleno de "g" que indica el subtipo grass
         this.#celdas = Array.from({ length: largo }, () =>
-            Array.from({ length: ancho }, () => null)
+            Array.from({ length: ancho }, () => "g")
         );
     }
 

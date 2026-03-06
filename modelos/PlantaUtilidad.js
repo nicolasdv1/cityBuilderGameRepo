@@ -9,7 +9,7 @@ class PlantaUtilidad extends Edificio {
             throw new Error("Tipo planta utilidad inválido")
         }
 
-        super(id, tipo.costo, tipo.costoMantenimiento, tipo.consumoElectricidad, tipo.consumoAgua);
+        super({id, costo: tipo.costo, costoMantenimiento: tipo.costoMantenimiento, consumoElectricidad: tipo.consumoElectricidad, consumoAgua: tipo.consumoAgua, subtipo: tipo.subtipo});
         this.#tipo = tipo;
     }
 

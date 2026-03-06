@@ -9,7 +9,7 @@ class EdificioIndustrial extends Productivo {
             throw new Error("Tipo industrial inválido")
         }
 
-        super(id, tipo.costo, tipo.costoMantenimiento, tipo.consumoElectricidad, tipo.consumoAgua);
+        super({id, costo: tipo.costo, costoMantenimiento: tipo.costoMantenimiento, consumoElectricidad: tipo.consumoElectricidad, consumoAgua: tipo.consumoAgua, subtipo: tipo.subtipo});
         this.#tipo = tipo;
     }
 

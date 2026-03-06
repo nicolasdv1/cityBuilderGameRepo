@@ -5,9 +5,9 @@ export class Edificio extends ElementoMapa{
     #consumoElectricidad;
     #consumoAgua;
 
-    constructor(id, costo, costoMantenimiento,
-                consumoElectricidad, consumoAgua) {
-        super(id, costo, costoMantenimiento);
+    constructor({id, costo, costoMantenimiento,
+                consumoElectricidad = 0, consumoAgua = 0, subtipo}) {
+        super({id, costo, costoMantenimiento, subtipo});
         this.consumoElectricidad = consumoElectricidad;
         this.consumoAgua = consumoAgua;
     }

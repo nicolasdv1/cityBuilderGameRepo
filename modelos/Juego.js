@@ -1,7 +1,7 @@
 import { TipoEstado } from "./Enums.js";
 import { Ciudad } from "./Ciudad.js";
 
-class Juego{
+export class Juego{
 
     #ciudad;
     #turnoActual;
@@ -11,7 +11,7 @@ class Juego{
 
     constructor({
         ciudad,
-        tiempoPorTurno = 60,
+        tiempoPorTurno = 30,
         turnoActual = 1,
         estado = TipoEstado.INICIADO,
         puntuacionAcumulada = 0

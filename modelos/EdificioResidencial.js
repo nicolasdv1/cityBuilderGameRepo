@@ -1,5 +1,6 @@
 import { Edificio } from "./Edificio.js";
 import { TipoResidencial } from "./Enums.js";
+import { Ciudadano } from "./Ciudadano.js";
 
 export class EdificioResidencial extends Edificio {
     #tipo;
@@ -10,7 +11,7 @@ export class EdificioResidencial extends Edificio {
             throw new Error("Tipo residencial inválido")
         }
 
-        super(id, tipo.costo, tipo.costoMantenimiento, tipo.consumoElectricidad, tipo.consumoAgua);
+        super({id, costo: tipo.costo, costoMantenimiento: tipo.costoMantenimiento, consumoElectricidad: tipo.consumoElectricidad, consumoAgua: tipo.consumoAgua, subtipo: tipo.subtipo});
         this.#tipo = tipo;
         this.#residentes = [];
     }

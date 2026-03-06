@@ -5,7 +5,8 @@ export const TipoResidencial = Object.freeze({
         costo: 1000,
         costoMantenimiento: 100,
         consumoElectricidad: 5,
-        consumoAgua: 3
+        consumoAgua: 3,
+        subtipo: "R1"
     }),
 
     APARTAMENTO: Object.freeze({
@@ -13,7 +14,8 @@ export const TipoResidencial = Object.freeze({
         costo: 3000,
         costoMantenimiento: 300,
         consumoElectricidad: 15,
-        consumoAgua: 10
+        consumoAgua: 10,
+        subtipo: "R2"
     })
 });
 
@@ -24,7 +26,8 @@ export const TipoServicio = Object.freeze({
         beneficioFelicidad: 10,
         costoMantenimiento: 300,
         consumoElectricidad: 15,
-        consumoAgua: 0
+        consumoAgua: 0,
+        subtipo: "S1"
     }),
 
     ESTACION_BOMBEROS: Object.freeze({
@@ -33,7 +36,8 @@ export const TipoServicio = Object.freeze({
         beneficioFelicidad: 10,
         costoMantenimiento: 300,
         consumoElectricidad: 15,
-        consumoAgua: 0
+        consumoAgua: 0,
+        subtipo: "S2"
     }),
 
     HOSPITAL: Object.freeze({
@@ -42,7 +46,8 @@ export const TipoServicio = Object.freeze({
         beneficioFelicidad: 10,
         costoMantenimiento: 400,
         consumoElectricidad: 20,
-        consumoAgua: 10
+        consumoAgua: 10,
+        subtipo: "S3"
     })
 });
 
@@ -53,7 +58,8 @@ export const TipoUtilidad = Object.freeze({
         tipoProduccion: "ELECTRICIDAD",
         costoMantenimiento: 700,
         consumoElectricidad: 0,
-        consumoAgua: 0
+        consumoAgua: 0,
+        subtipo: "U1"
     }),
 
     PLANTA_AGUA: Object.freeze({
@@ -62,7 +68,8 @@ export const TipoUtilidad = Object.freeze({
         tipoProduccion: "AGUA",
         costoMantenimiento: 500,
         consumoElectricidad: 20,
-        consumoAgua: 0
+        consumoAgua: 0,
+        subtipo: "U2"
     })
 });
 
@@ -73,7 +80,8 @@ export const TipoComercial = Object.freeze({
         costoMantenimiento: 200,
         ingresoPorTurno: 500,
         consumoElectricidad: 8,
-        consumoAgua: 2
+        consumoAgua: 2,
+        subtipo: "C1"
     }),
 
     CENTRO_COMERCIAL: Object.freeze({
@@ -82,7 +90,8 @@ export const TipoComercial = Object.freeze({
         costoMantenimiento: 800,
         ingresoPorTurno: 2000,
         consumoElectricidad: 25,
-        consumoAgua: 6
+        consumoAgua: 6,
+        subtipo: "C2"
     })
 });
 
@@ -94,7 +103,8 @@ export const TipoIndustrial = Object.freeze({
         tipoProduccion: "DINERO",
         costoMantenimiento: 500,
         consumoElectricidad: 20,
-        consumoAgua: 15
+        consumoAgua: 15,
+        subtipo: "I1"
     }),
 
     GRANJA: Object.freeze({
@@ -104,7 +114,8 @@ export const TipoIndustrial = Object.freeze({
         tipoProduccion: "ALIMENTOS",
         costoMantenimiento: 300,
         consumoElectricidad: 0,
-        consumoAgua: 10
+        consumoAgua: 10,
+        subtipo: "I2"
     })
 });
 
