@@ -51,11 +51,11 @@ const panel = document.getElementById("panelDesglose");
 const overlayGameOver = document.getElementById("overlay-gameover");
 
 //contadores
-const dinero = document.getElementById("dinero");
-const totalAgua = document.getElementById("totalAgua");
-const totalElectricidad = document.getElementById("totalElectricidad");
-const totalAlimento = document.getElementById("totalAlimento");
-const promedioFelicidad = document.getElementById("promedioFelicidad");
+//const dinero = document.getElementById("dinero");
+//const totalAgua = document.getElementById("totalAgua");
+//const totalElectricidad = document.getElementById("totalElectricidad");
+//const totalAlimento = document.getElementById("totalAlimento");
+//const promedioFelicidad = document.getElementById("promedioFelicidad");
 
 
 
@@ -706,20 +706,44 @@ function obtenerTipoPorSubtipo(subtipo){
     return todos.find(tipo => tipo.subtipo === subtipo);
 }
 
-function actualizarRecursos(juego){
+function actualizarRecursos(juego) {
     sistemaCiudadanos = new controladorCiudadanos(juego);
-    let {ciudadanos} = juego.ciudad;
-    puntaje.textContent = `${juego.puntuacionAcumulada}`; //OJO
-    dinero.textContent = `${juego.ciudad.economia.dinero}`;
-    totalAgua.textContent = `${juego.ciudad.economia.agua}`;
-    totalElectricidad.textContent = `${juego.ciudad.economia.electricidad}`;
-    totalAlimento.textContent = `${juego.ciudad.economia.alimento}`;
-    promedioFelicidad.textContent = `${sistemaCiudadanos.obtenerFelicidadPromedio(ciudadanos)}`;
+    let { ciudadanos } = juego.ciudad;
+    const econ = juego.ciudad.economia;
+
+    const datos = {
+        'puntaje': juego.puntuacionAcumulada,
+        'dinero': econ.dinero,
+        'totalAgua': econ.agua,
+        'totalElectricidad': econ.electricidad,
+        'totalAlimento': econ.alimento,
+        'promedioFelicidad': sistemaCiudadanos.obtenerFelicidadPromedio(ciudadanos)
+    };
+
+    //actualizar PC y Móvil
+    Object.keys(datos).forEach(idBase => {
+        const valor = datos[idBase];
+        
+        //versión PC
+        const elPC = document.getElementById(`${idBase}-pc`);
+        if (elPC) elPC.textContent = valor;
+
+        //versión Móvil
+        const elM = document.getElementById(`${idBase}-m`);
+        if (elM) elM.textContent = valor;
+        
+        
+        const elOriginal = document.getElementById(idBase);
+        if (elOriginal) elOriginal.textContent = valor;
+    });
 }
 
-function actualizarPuntuacion(scr){
-    const puntaje = document.getElementById("puntaje");
-    puntaje.textContent = scr;
+function actualizarPuntuacion(scr) {
+    const pPC = document.getElementById("puntaje-pc");
+    const pM = document.getElementById("puntaje-m");
+    
+    if (pPC) pPC.textContent = scr;
+    if (pM) pM.textContent = scr;
 }
 
 function renderDesglose(desglose) {

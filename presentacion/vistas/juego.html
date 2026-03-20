@@ -9,6 +9,26 @@
             <link rel="stylesheet" type="text/css" href="../estilos/juego.css">
         </head>
         <body>
+            <!--bloque de estadisticas en celular-->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm py-1 d-lg-none">
+                <div class="container-fluid">
+                    <span class="navbar-brand fs-6 fw-bold text-warning">💰 <span id="dinero-m">500000</span></span>
+                    
+                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#recursosDetalle">
+                        <span class="navbar-toggler-icon" style="width: 1.2em; height: 1.2em;"></span>
+                    </button>
+                    
+                    <div class="collapse navbar-collapse" id="recursosDetalle">
+                        <ul class="navbar-nav ms-auto align-items-center flex-row flex-wrap justify-content-center">
+                            <li class="nav-item px-2 text-white small">💧 Agua: <span id="totalAgua-m" class="fw-bold">0</span></li>
+                            <li class="nav-item px-2 text-white small">⚡ Luz: <span id="totalElectricidad-m" class="fw-bold">0</span></li>
+                            <li class="nav-item px-2 text-white small">🍎 Comida: <span id="totalAlimento-m" class="fw-bold">0</span></li>
+                            <li class="nav-item px-2 text-white small">😊 Felicidad: <span id="promedioFelicidad-m" class="fw-bold">0</span>%</li>
+                            <li class="nav-item px-2 text-white small">🏆 Puntaje <span id="puntaje-pc">0</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
             <!-- game over oculto -->
             <div id="overlay-gameover" class="oculto">
                 <div id="panel-gameover" class="panel">
@@ -29,51 +49,58 @@
                 <label id="estadisticasCiudadanos" class="text-center fw-semibold">Ciudadanos: 0 | Residentes: 0 | No residentes: 0 | Empleados: 0 | Desempleados: 0 | Felicidad promedio: 0%</label>
             </div>
             <button id="btnRanking" type="button" class="btn btn-light">🏆 Mostrar ranking</button>
-
-            <div class="container-fluid d-flex mt-3">
-                <div class="col-auto me-4">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <button class="btn btn-primary w-100 mb-2" type="button" 
-                                    data-bs-toggle="collapse" data-bs-target="#menuHerramientas">
-                                Herramientas
-                            </button>
-        
-                            <div class="collapse" id="menuHerramientas">
-                                <div class="d-grid gap-2 border-top pt-2">
+            
+            <div class="container-fluid d-flex flex-column flex-md-row mt-3 justify-content-center">
+                <div class="col-12 col-md-auto me-md-4 order-2 order-md-1 construction-menu">
+                    <div class="card shadow-sm border-0 border-md">
+                        <div class="card-body p-2 p-md-3">
+                            <!--bloque de herramientas en celular-->
+                            <ul class="nav nav-pills nav-justified d-md-none mb-2 overflow-x: auto" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <button class="nav-link active py-2" data-bs-toggle="collapse" data-bs-target="#menuHerramientas">🏗️ <small class="d-block" >Construir</small></button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="nav-link py-2" id="btnDemolerMovil" onclick="document.getElementById('btnDemoler').click()">🔨 <small class="d-block" >Demoler</small></button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="nav-link py-2" onclick="document.getElementById('btnCalcularRuta').click()">🛤️ <small class="d-block" >Ruta</small></button>
+                                </li>
+                            </ul>
+                
+                            <div class="collapse d-md-block" id="menuHerramientas">
+                                <h5 class="d-none d-md-block border-bottom pb-2">Herramientas</h5>
+                                <div class="d-grid gap-2 menu-scrollable">
                                     
-                                    <button class="btn btn-outline-success" type="button" 
-                                            data-bs-toggle="collapse" data-bs-target="#opcionesConstruir">
-                                        Construir
+                                    <button class="btn btn-sm btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#opcionesConstruir">
+                                        Ver Categorías
                                     </button>
-        
+                                    
                                     <div class="collapse" id="opcionesConstruir">
                                         <div class="d-grid gap-2 ms-2 border-start ps-2 my-2">
-                                            
-                                            <button class="btn btn-sm btn-light border" type="button" data-bs-toggle="collapse" data-bs-target="#tiposResidencia">Edificios residenciales</button>
-                                            <div class="collapse ms-2" id="tiposResidencia">
+                                            <button class="btn btn-sm btn-light border" type="button" data-bs-toggle="collapse" data-bs-target="#tiposResidencia">Residencial</button>
+                                            <div class="collapse" id="tiposResidencia">
                                                 <div class="d-grid gap-1 py-1">
                                                     <button class="btn btn-objeto border" id="itemCasa" title="(Capacidad: 4, Costo: $1,000)">Casa</button>
                                                     <button class="btn btn-objeto border" id="itemApartamento" title="(Capacidad: 12, Costo: $3,000)">Apartamento</button>
                                                 </div>
                                             </div>
-        
-                                            <button class="btn btn-sm btn-light border" type="button" data-bs-toggle="collapse" data-bs-target="#tipoComercial">Edificios comercial</button>
-                                            <div class="collapse ms-2" id="tipoComercial">
+                
+                                            <button class="btn btn-sm btn-light border" type="button" data-bs-toggle="collapse" data-bs-target="#tipoComercial">Comercial</button>
+                                            <div class="collapse" id="tipoComercial">
                                                 <div class="d-grid gap-1 py-1">
                                                     <button class="btn btn-objeto border" id="itemTienda" title="(Capacidad: 20, Costo: $5,000)">Tienda</button>
                                                     <button class="btn btn-objeto border" id="itemMall" title="(Capacidad: 100, Costo: $20,000)">Centro comercial</button>
                                                 </div>
                                             </div>
-        
-                                            <button class="btn btn-sm btn-light border" type="button" data-bs-toggle="collapse" data-bs-target="#tipoIndustrial">Edificios industrial</button>
-                                            <div class="collapse ms-2" id="tipoIndustrial">
+                
+                                            <button class="btn btn-sm btn-light border" type="button" data-bs-toggle="collapse" data-bs-target="#tipoIndustrial">Industrial</button>
+                                            <div class="collapse" id="tipoIndustrial">
                                                 <div class="d-grid gap-1 py-1">
                                                     <button class="btn btn-objeto border" id="itemFabrica" title="(genera dinero: 800, Capacidad: 50, Costo: $5,000)">Fabrica</button>
                                                     <button class="btn btn-objeto border" id="itemGranja" title="(genera alimento: 50, Capacidad: 30, Costo: $7,000)">Granja</button>
                                                 </div>
                                             </div>
-        
+
                                             <button class="btn btn-sm btn-light border" type="button" data-bs-toggle="collapse" data-bs-target="#tipoServicio">Edificios de servicios</button>
                                             <div class="collapse ms-2" id="tipoServicio">
                                                 <div class="d-grid gap-1 py-1">
@@ -82,7 +109,7 @@
                                                     <button class="btn btn-objeto border" id="itemHospital" title="(genera felicidad: 10, Capacidad: 50, Costo: $25,000)">Hospital</button>
                                                 </div>
                                             </div>
-        
+
                                             <button class="btn btn-sm btn-light border" type="button" data-bs-toggle="collapse" data-bs-target="#tipoUtilidad">Edificios de utilidad</button>
                                             <div class="collapse ms-2" id="tipoUtilidad">
                                                 <div class="d-grid gap-1 py-1">
@@ -90,32 +117,26 @@
                                                     <button class="btn btn-objeto border" id="itemAgua" title="(genera agua: 200, Capacidad: 150, Costo: $12,000)">Planta de agua</button>
                                                 </div>
                                             </div>
-        
-                                            <button class="btn btn-sm btn-light border" id="itemParque" title="(costo: 1500)">Parque</button>
-                                            <button class="btn btn-sm btn-light border" id="itemVia" title="(costo: 100)">Vía</button>
+                
+                                            <button class="btn btn-sm btn-light border" id="itemParque">Parque</button>
+                                            <button class="btn btn-sm btn-light border" id="itemVia">Vía</button>
                                         </div>
                                     </div>
-        
-                                    <button class="btn btn-outline-danger" id="btnDemoler">
-                                        Destruir
-                                    </button>
-
-                                    <button id="btnCalcularRuta" type="button" class="btn btn-dark">
-                                        Calcular Ruta
-                                    </button>
-
-                                    <button id="btnExportar" type="button" class="btn">
-                                        Exportar a JSON
-                                    </button>
+                
+                                    <div class="d-none d-md-grid gap-2">
+                                        <button class="btn btn-outline-danger btn-sm" id="btnDemoler">Destruir</button>
+                                        <button id="btnCalcularRuta" class="btn btn-dark btn-sm">Calcular Ruta</button>
+                                        <button id="btnExportar" class="btn btn-warning btn-sm">Exportar JSON</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div> <!-- finalizacion container de herramientas -->
 
-            <div id="grid-container">
-                <div id="mapa" class="mapa"></div>
-            </div>
+                <div id="grid-container" class="map-container-responsive order-1 order-md-2 flex-grow-1">
+                    <div id="mapa" class="mapa"></div>
+                </div>
 
             <!-- panel de informacion edificios (ESCONDIDO POR DEFECTO)-->
             <div id="panelEdificio" class="panel-edificio oculto">
@@ -139,18 +160,18 @@
             
             </div>
 
-            <div class="col-auto ms-4">
+            <div class="col-12 col-md-auto ms-md-4 order-3 order-md-3">
                 <div class="card shadow-sm panel-derecho">
                     <div class="card-body p-0 d-flex flex-column">
 
                         <!-- div de estadisticas -->
-                        <div class="seccion-panel p-3">
+                        <div class="seccion-panel p-3 d-none d-md-block" >
                             <h6 class="titulo-seccion">Estadísticas</h6>
                             <div id="estadisticas-contenido">
                                 <div class="list-group list-group-flush">
                                     <div class="puntaje-container d-flex justify-content-between align-items-center">
                                         <span class="text-muted small">Puntaje</span>
-                                        <span id="puntaje">0</span>
+                                        <span id="puntaje-pc">0</span>
                                         <!-- Panel flotante -->
                                             <div class="panel-desglose" id="panelDesglose">
                                                 <div class="titulo">Desglose</div>
@@ -172,23 +193,23 @@
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span class="text-muted small">Dinero</span>
-                                        <span id="dinero" class="fw-bold">500000</span>
+                                        <span id="dinero-pc" class="fw-bold">500000</span>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span class="text-muted small">Agua</span>
-                                        <span id="totalAgua" class="fw-bold">0</span>
+                                        <span id="totalAgua-pc" class="fw-bold">0</span>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span class="text-muted small">Comida</span>
-                                        <span id="totalAlimento">0</span>
+                                        <span id="totalAlimento-pc">0</span>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <span class="text-muted small">electricidad:</span>
-                                        <span id="totalElectricidad">0</span>
+                                        <span id="totalElectricidad-pc">0</span>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <span class="text-muted small">Felicidad:</span>
-                                        <span id="promedioFelicidad">0</span>
+                                        <span id="promedioFelicidad-pc">0</span>
                                     </div>
                                     <!-- contadores -->
                                     <div class="mt-2 pt-2 border-top">
@@ -289,4 +310,5 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
             
         </body>
+        
     </html>
