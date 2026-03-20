@@ -554,11 +554,6 @@ body{
     margin-bottom: 15px;
 }
 
-/* ═══════════════════════════════════════════════════════════╗
-   PASO 7 & 8: Global Touch & Accessibility Improvements
-   Button sizing, hover states, and tooltip styling
-   ═══════════════════════════════════════════════════════════╝ */
-
 /* Global button sizing for consistency */
 button:not(.tablet-tab-button):not(.nav-link) {
     min-height: 32px;
@@ -587,16 +582,6 @@ a[title],
 [data-bs-toggle="tooltip"] {
     position: relative;
 }
-
-/* ═══════════════════════════════════════════════════════════╗
-   HU-23: TABLET RESPONSIVE (768px - 1024px)
-   Steps 3, 4, 5, 6: Layout 70/30 + Sidebar reordering + Climate/News tabs + Orientation support
-   Steps 7, 8: Touch-friendly buttons + Tooltip & Modal scaling
-   ═══════════════════════════════════════════════════════════╝ */
-
-/* ─────────────────────────────────────────────────────────
-   PASO 5: Climate & News Tabs (Touch-Friendly)
-   ─────────────────────────────────────────────────────────*/
 
 .tablet-climate-news-tabs {
     border-bottom: 2px solid #dee2e6;
@@ -642,11 +627,6 @@ a[title],
     margin: 0;
     border: none;
 }
-
-/* ─────────────────────────────────────────────────────────
-   PASO 6: ORIENTATION SUPPORT - VERTICAL (PORTRAIT)
-   768px - 1024px, Portrait orientation
-   ─────────────────────────────────────────────────────────*/
 
 @media (min-width: 768px) and (max-width: 1024px) {
     body {
@@ -717,7 +697,6 @@ a[title],
 }
 
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-    /* Step 3: Prevent global horizontal scroll */
     body {
         overflow-x: hidden;
     }
@@ -769,7 +748,7 @@ a[title],
         overflow-y: auto;
     }
 
-    /* Step 3: Layout 70/30 distribution (adjusted for grid) */
+    /*Layout 70/30 distribution (adjusted for grid) */
     .tablet-map-grid-container {
         width: 100%;
         display: flex;
@@ -778,7 +757,7 @@ a[title],
         padding: 10px;
     }
 
-    /* Step 3: Adjust grid cell size to fit 100% within available space */
+    /*Adjust grid cell size to fit 100% within available space */
     #mapa {
         width: min(100%, 720px);
         max-width: 100%;
@@ -798,7 +777,7 @@ a[title],
         max-height: 90vh;
     }
 
-    /* Step 4: Sidebar section ordering - Resources (top) */
+    /*Sidebar section ordering - Resources (top) */
     .tablet-sidebar-section--resources {
         order: 1;
         border-bottom: 2px solid #f0f0f0;
@@ -814,7 +793,7 @@ a[title],
         margin-bottom: 10px;
     }
 
-    /* Step 4: Sidebar section ordering - Statistics (bottom) */
+    /*Sidebar section ordering - Statistics (bottom) */
     .tablet-sidebar-section--statistics {
         order: 3;
         border-bottom: 2px solid #f0f0f0;
@@ -830,7 +809,7 @@ a[title],
         margin-bottom: 10px;
     }
 
-    /* Step 5: Climate & News section with tabs (bottom-most) */
+    /*Climate & News section with tabs (bottom-most) */
     .tablet-sidebar-section--climate-news {
         order: 4;
         padding: 0;
@@ -877,10 +856,6 @@ a[title],
         margin-bottom: 4px;
     }
 
-    /* ─────────────────────────────────────────────────────
-       PASO 7: Touch-Friendly Buttons (Portrait)
-       ─────────────────────────────────────────────────────*/
-
     /* All buttons in tablet view: min height 44px, adequate padding */
     .btn {
         min-height: 44px;
@@ -919,10 +894,6 @@ a[title],
     .nav-item {
         margin-right: 4px;
     }
-
-    /* ─────────────────────────────────────────────────────
-       PASO 8: Tooltips & Modals Scaling (Portrait)
-       ─────────────────────────────────────────────────────*/
 
     /* Bootstrap tooltip customization */
     .tooltip {
@@ -992,14 +963,8 @@ a[title],
     }
 }
 
-/* ─────────────────────────────────────────────────────────
-   PASO 6: ORIENTATION SUPPORT - HORIZONTAL (LANDSCAPE)
-   768px - 1024px, Landscape orientation
-   Wider distribution: map more prominent, sidebars optimized
-   ─────────────────────────────────────────────────────────*/
-
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-    /* Step 3: Prevent global horizontal scroll */
+    /*Prevent global horizontal scroll */
     body {
         overflow-x: hidden;
     }
@@ -1059,7 +1024,7 @@ a[title],
         overflow-y: auto;
     }
 
-    /* Step 3: Layout distribution for landscape */
+    /*Layout distribution for landscape */
     .tablet-map-grid-container {
         width: 100%;
         display: flex;
@@ -1089,7 +1054,7 @@ a[title],
         max-height: 100vh;
     }
 
-    /* Step 4-5: Sidebar section ordering - Landscape */
+    /*Sidebar section ordering - Landscape */
     .tablet-sidebar-section--resources {
         order: 1;
         border-bottom: 1px solid #f0f0f0;
@@ -1121,7 +1086,7 @@ a[title],
         margin-bottom: 8px;
     }
 
-    /* Step 5: Climate & News section with tabs in landscape */
+    /*Climate & News section with tabs in landscape */
     .tablet-sidebar-section--climate-news {
         order: 3;
         padding: 0;
@@ -1159,10 +1124,6 @@ a[title],
         margin-bottom: 2px;
     }
 
-    /* ─────────────────────────────────────────────────────────
-       PASO 7: Touch-Friendly Buttons (Landscape)
-       ─────────────────────────────────────────────────────────*/
-
     /* All buttons in landscape: min height 44px, adequate padding */
     .btn {
         min-height: 44px;
@@ -1198,10 +1159,6 @@ a[title],
         padding: 10px 14px !important;
         margin-bottom: 3px;
     }
-
-    /* ─────────────────────────────────────────────────────────
-       PASO 8: Tooltips & Modals Scaling (Landscape)
-       ─────────────────────────────────────────────────────────*/
 
     /* Tooltip customization for landscape */
     .tooltip {
@@ -1267,7 +1224,7 @@ a[title],
 /* ─────────────────────────────────────────────────────────*/
 
 /* ═══════════════════════════════════════════════════════════╗
-   HU-23 STABLE TABLET OVERRIDE (Final)
+   HU-23 STABLE TABLET OVERRIDE 
    Enforces: 70/30, resources top, construction center, stats bottom
    ═══════════════════════════════════════════════════════════╝ */
 
