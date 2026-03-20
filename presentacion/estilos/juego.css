@@ -505,6 +505,7 @@ body{
     margin-bottom: 8px;
     /* Efecto de recorte a 3 líneas */
     display: -webkit-box;
+    line-clamp: 3;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -647,6 +648,74 @@ a[title],
    768px - 1024px, Portrait orientation
    ─────────────────────────────────────────────────────────*/
 
+@media (min-width: 768px) and (max-width: 1024px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .game-layout {
+        display: grid !important;
+        grid-template-columns: 70% 30%;
+        grid-template-rows: auto auto;
+        gap: 12px;
+        width: 100%;
+        max-width: 100%;
+        align-items: start;
+    }
+
+    .game-layout-col--map {
+        grid-column: 1;
+        grid-row: 1 / 3;
+        width: 100%;
+        min-width: 0;
+        padding: 8px;
+        overflow: hidden;
+    }
+
+    .game-layout-col--construction {
+        grid-column: 2;
+        grid-row: 1;
+        margin: 0 !important;
+        padding: 0;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .game-layout-col--tablet-sidebar {
+        grid-column: 2;
+        grid-row: 2;
+        margin: 0 !important;
+        width: 100%;
+        min-width: 0;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .tablet-map-grid-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #mapa {
+        width: min(100%, 720px);
+        max-width: 100%;
+        aspect-ratio: 1 / 1;
+    }
+
+    .tablet-sidebar-card {
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .tablet-sidebar-body {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+}
+
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
     /* Step 3: Prevent global horizontal scroll */
     body {
@@ -654,19 +723,14 @@ a[title],
     }
 
     .game-layout {
-        display: grid;
-        grid-template-columns: 30% 70%;
-        grid-template-rows: auto;
-        gap: 0;
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden;
+        grid-template-columns: 70% 30%;
+        gap: 12px;
     }
 
     /* Grid positioning: Resources, Construction, Maps, Statistics */
     .game-layout-col--construction {
-        grid-column: 1;
-        grid-row: 2;
+        grid-column: 2;
+        grid-row: 1;
         margin: 0;
         padding: 0;
         border: none;
@@ -685,8 +749,8 @@ a[title],
 
     /* Map column: appears on the right */
     .game-layout-col--map {
-        grid-column: 2;
-        grid-row: 1 / 4;
+        grid-column: 1;
+        grid-row: 1 / 3;
         width: 100%;
         min-width: 0;
         overflow-x: hidden;
@@ -695,9 +759,8 @@ a[title],
 
     /* Tablet sidebar column: appears on the left */
     .game-layout-col--tablet-sidebar {
-        grid-column: 1;
-        grid-row: 1;
-        grid-row-end: 3;
+        grid-column: 2;
+        grid-row: 2;
         width: 100%;
         min-width: 0;
         margin-left: 0;
@@ -717,7 +780,7 @@ a[title],
 
     /* Step 3: Adjust grid cell size to fit 100% within available space */
     #mapa {
-        width: min(100%, 85vw * 0.7);
+        width: min(100%, 720px);
         max-width: 100%;
         aspect-ratio: 1 / 1;
     }
@@ -942,26 +1005,22 @@ a[title],
     }
 
     .game-layout {
-        display: grid;
-        grid-template-columns: 25% 50% 25%;
-        grid-template-rows: 1fr;
-        gap: 0;
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden;
-        height: 100vh;
-        max-height: 100vh;
+        grid-template-columns: 70% 30%;
+        grid-template-rows: auto auto;
+        gap: 12px;
+        height: auto;
+        max-height: none;
     }
 
     /* Left sidebar: Resources & Construction */
     .game-layout-col--construction {
-        grid-column: 1;
+        grid-column: 2;
         grid-row: 1;
         margin: 0;
         padding: 0;
         border: none;
         overflow-y: auto;
-        max-height: 100vh;
+        max-height: 40vh;
     }
 
     .game-layout-col--construction .tablet-sidebar-section {
@@ -977,8 +1036,8 @@ a[title],
 
     /* Center: Map */
     .game-layout-col--map {
-        grid-column: 2;
-        grid-row: 1;
+        grid-column: 1;
+        grid-row: 1 / 3;
         width: 100%;
         min-width: 0;
         overflow: hidden;
@@ -990,13 +1049,13 @@ a[title],
 
     /* Right sidebar: Statistics, Climate & News */
     .game-layout-col--tablet-sidebar {
-        grid-column: 3;
-        grid-row: 1;
+        grid-column: 2;
+        grid-row: 2;
         width: 100%;
         min-width: 0;
         margin-left: 0;
-        height: 100vh;
-        max-height: 100vh;
+        height: auto;
+        max-height: 55vh;
         overflow-y: auto;
     }
 
@@ -1012,7 +1071,7 @@ a[title],
 
     /* Adjust map for landscape: more compact */
     #mapa {
-        width: min(100%, 50vw * 0.85);
+        width: min(100%, 720px);
         max-width: 100%;
         aspect-ratio: 1 / 1;
     }
@@ -1035,7 +1094,7 @@ a[title],
         order: 1;
         border-bottom: 1px solid #f0f0f0;
         padding: 12px;
-        display: none;
+        display: block;
     }
 
     .tablet-sidebar-section--resources .seccion-panel {
@@ -1206,3 +1265,159 @@ a[title],
 }
 
 /* ─────────────────────────────────────────────────────────*/
+
+/* ═══════════════════════════════════════════════════════════╗
+   HU-23 STABLE TABLET OVERRIDE (Final)
+   Enforces: 70/30, resources top, construction center, stats bottom
+   ═══════════════════════════════════════════════════════════╝ */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .game-layout {
+        display: grid !important;
+        grid-template-columns: 70% 30% !important;
+        grid-template-rows: auto !important;
+        gap: 12px !important;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        align-items: start;
+    }
+
+    .game-layout-col--map {
+        grid-column: 1;
+        grid-row: 1;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .game-layout-col--construction {
+        display: none !important;
+    }
+
+    .game-layout-col--tablet-sidebar {
+        grid-column: 2;
+        grid-row: 1;
+        margin: 0 !important;
+        min-width: 0;
+        width: 100%;
+        height: calc(100dvh - 140px);
+        max-height: calc(100dvh - 140px);
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .tablet-sidebar-card {
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+
+    .tablet-sidebar-body {
+        display: flex;
+        flex-direction: column;
+        max-height: none;
+        overflow: visible !important;
+    }
+
+    .panel-derecho {
+        max-height: none !important;
+        overflow: visible !important;
+    }
+
+    .tablet-sidebar-section--climate-news .tablet-climate-news-content {
+        overflow: visible;
+        max-height: none;
+    }
+
+    .tablet-sidebar-section--resources {
+        order: 1;
+    }
+
+    #tabletConstructionSection {
+        order: 2;
+        display: block !important;
+        padding: 12px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    #tabletConstructionSection #constructionMenuContainer {
+        width: 100%;
+        margin: 0;
+    }
+
+    #tabletConstructionSection .btn {
+        min-height: 44px;
+    }
+
+    .tablet-sidebar-section--statistics {
+        order: 3;
+    }
+
+    .tablet-sidebar-section--climate-news {
+        order: 4;
+    }
+
+    .tablet-map-grid-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #mapa {
+        width: min(100%, 720px) !important;
+        max-width: 100%;
+        aspect-ratio: 1 / 1;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .game-layout {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto auto !important;
+        gap: 16px !important;
+    }
+
+    .game-layout-col--map {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+    }
+
+    .game-layout-col--tablet-sidebar {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+        width: 100% !important;
+        height: auto;
+        max-height: none;
+        overflow: visible;
+    }
+
+    .tablet-sidebar-body {
+        gap: 10px;
+    }
+
+    .tablet-sidebar-section--resources,
+    #tabletConstructionSection,
+    .tablet-sidebar-section--statistics,
+    .tablet-sidebar-section--climate-news {
+        padding-top: 14px;
+        padding-bottom: 14px;
+    }
+
+    #mapa {
+        width: min(100%, 86vw) !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .game-layout {
+        grid-template-columns: 70% 30% !important;
+    }
+
+    .game-layout-col--tablet-sidebar {
+        height: calc(100dvh - 120px);
+        max-height: calc(100dvh - 120px);
+    }
+}
