@@ -5,6 +5,23 @@ body{
     background-color:powderblue ;
 }
 
+/* These classes are intentionally neutral to keep desktop/tablet/mobile
+   appearance unchanged while introducing semantic layout anchors. */
+.game-layout--baseline {
+    width: 100%;
+}
+
+.game-layout-col,
+.tablet-map-column,
+.tablet-map-grid-container,
+.tablet-sidebar-column,
+.tablet-sidebar-card,
+.tablet-sidebar-body,
+.tablet-sidebar-section,
+.tablet-sidebar-construction {
+    min-width: 0;
+}
+
 .cursor-demolicion {
     cursor: url("/textures/hammer1redim.png"), auto;
 }
@@ -535,3 +552,657 @@ body{
     font-weight: 800;
     margin-bottom: 15px;
 }
+
+/* ═══════════════════════════════════════════════════════════╗
+   PASO 7 & 8: Global Touch & Accessibility Improvements
+   Button sizing, hover states, and tooltip styling
+   ═══════════════════════════════════════════════════════════╝ */
+
+/* Global button sizing for consistency */
+button:not(.tablet-tab-button):not(.nav-link) {
+    min-height: 32px;
+    padding: 8px 12px !important;
+    transition: all 0.2s ease;
+}
+
+/* Bootstrap tooltips styling */
+.tooltip {
+    font-size: 0.85rem;
+}
+
+.tooltip-inner {
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 4px;
+    padding: 8px 12px;
+    max-width: 200px;
+    text-align: left;
+    word-wrap: break-word;
+    line-height: 1.3;
+}
+
+/* Button titles fallback styling */
+button[title],
+a[title],
+[data-bs-toggle="tooltip"] {
+    position: relative;
+}
+
+/* ═══════════════════════════════════════════════════════════╗
+   HU-23: TABLET RESPONSIVE (768px - 1024px)
+   Steps 3, 4, 5, 6: Layout 70/30 + Sidebar reordering + Climate/News tabs + Orientation support
+   Steps 7, 8: Touch-friendly buttons + Tooltip & Modal scaling
+   ═══════════════════════════════════════════════════════════╝ */
+
+/* ─────────────────────────────────────────────────────────
+   PASO 5: Climate & News Tabs (Touch-Friendly)
+   ─────────────────────────────────────────────────────────*/
+
+.tablet-climate-news-tabs {
+    border-bottom: 2px solid #dee2e6;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.tablet-tab-button {
+    padding: 12px 16px !important;
+    min-height: 44px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    color: #6c757d;
+    transition: all 0.2s ease;
+    touch-action: manipulation;
+}
+
+.tablet-tab-button:hover {
+    color: #212529;
+    background-color: #f8f9fa;
+    border-bottom-color: #ccc;
+}
+
+.tablet-tab-button.active {
+    color: #0d6efd;
+    border-bottom-color: #0d6efd;
+    background-color: transparent;
+}
+
+.tablet-climate-news-content {
+    padding: 0;
+    min-height: 200px;
+}
+
+.tablet-climate-news-content .tab-pane {
+    padding: 12px 0;
+}
+
+.tablet-climate-news-content .seccion-panel {
+    margin: 0;
+    border: none;
+}
+
+/* ─────────────────────────────────────────────────────────
+   PASO 6: ORIENTATION SUPPORT - VERTICAL (PORTRAIT)
+   768px - 1024px, Portrait orientation
+   ─────────────────────────────────────────────────────────*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    /* Step 3: Prevent global horizontal scroll */
+    body {
+        overflow-x: hidden;
+    }
+
+    .game-layout {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        grid-template-rows: auto;
+        gap: 0;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* Grid positioning: Resources, Construction, Maps, Statistics */
+    .game-layout-col--construction {
+        grid-column: 1;
+        grid-row: 2;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    .game-layout-col--construction .tablet-sidebar-section {
+        margin: 0;
+        padding: 12px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .game-layout-col--construction .card {
+        border-radius: 0;
+        margin: 0;
+    }
+
+    /* Map column: appears on the right */
+    .game-layout-col--map {
+        grid-column: 2;
+        grid-row: 1 / 4;
+        width: 100%;
+        min-width: 0;
+        overflow-x: hidden;
+        padding: 10px;
+    }
+
+    /* Tablet sidebar column: appears on the left */
+    .game-layout-col--tablet-sidebar {
+        grid-column: 1;
+        grid-row: 1;
+        grid-row-end: 3;
+        width: 100%;
+        min-width: 0;
+        margin-left: 0;
+        height: auto;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    /* Step 3: Layout 70/30 distribution (adjusted for grid) */
+    .tablet-map-grid-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+    }
+
+    /* Step 3: Adjust grid cell size to fit 100% within available space */
+    #mapa {
+        width: min(100%, 85vw * 0.7);
+        max-width: 100%;
+        aspect-ratio: 1 / 1;
+    }
+
+    .tablet-sidebar-card {
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+        border-left: 1px solid #ddd;
+    }
+
+    .tablet-sidebar-body {
+        flex-direction: column;
+        overflow-y: auto;
+        max-height: 90vh;
+    }
+
+    /* Step 4: Sidebar section ordering - Resources (top) */
+    .tablet-sidebar-section--resources {
+        order: 1;
+        border-bottom: 2px solid #f0f0f0;
+        padding: 12px;
+    }
+
+    .tablet-sidebar-section--resources .seccion-panel {
+        padding: 12px !important;
+    }
+
+    .tablet-sidebar-section--resources .titulo-seccion {
+        font-size: 0.75rem;
+        margin-bottom: 10px;
+    }
+
+    /* Step 4: Sidebar section ordering - Statistics (bottom) */
+    .tablet-sidebar-section--statistics {
+        order: 3;
+        border-bottom: 2px solid #f0f0f0;
+        padding: 12px;
+    }
+
+    .tablet-sidebar-section--statistics .seccion-panel {
+        padding: 12px !important;
+    }
+
+    .tablet-sidebar-section--statistics .titulo-seccion {
+        font-size: 0.75rem;
+        margin-bottom: 10px;
+    }
+
+    /* Step 5: Climate & News section with tabs (bottom-most) */
+    .tablet-sidebar-section--climate-news {
+        order: 4;
+        padding: 0;
+        max-height: 25vh;
+        overflow: hidden;
+        border-bottom: 2px solid #f0f0f0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .tablet-sidebar-section--climate-news .tablet-climate-news-tabs {
+        margin: 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .tablet-sidebar-section--climate-news .tablet-climate-news-content {
+        overflow-y: auto;
+        flex: 1;
+        min-height: 0;
+    }
+
+    .tablet-sidebar-section--climate-news .seccion-panel {
+        padding: 10px !important;
+        margin-bottom: 8px;
+    }
+
+    .tablet-sidebar-section--climate-news .titulo-seccion {
+        font-size: 0.7rem;
+        margin-bottom: 6px;
+    }
+
+    /* Compress content in sidebar sections for tablet */
+    .tablet-sidebar-section--resources .list-group {
+        font-size: 0.8rem;
+    }
+
+    .tablet-sidebar-section--resources .d-flex {
+        margin-bottom: 6px;
+        font-size: 0.8rem;
+    }
+
+    .tablet-sidebar-section--statistics .d-flex {
+        font-size: 0.75rem;
+        margin-bottom: 4px;
+    }
+
+    /* ─────────────────────────────────────────────────────
+       PASO 7: Touch-Friendly Buttons (Portrait)
+       ─────────────────────────────────────────────────────*/
+
+    /* All buttons in tablet view: min height 44px, adequate padding */
+    .btn {
+        min-height: 44px;
+        padding: 10px 16px !important;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Construction menu buttons: increased spacing */
+    .game-layout-col--construction .btn {
+        min-height: 44px;
+        padding: 12px 16px !important;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        border-radius: 4px;
+    }
+
+    .game-layout-col--construction .d-grid.gap-2 {
+        gap: 8px !important;
+    }
+
+    .game-layout-col--construction #menuHerramientas {
+        max-height: 35vh;
+        overflow-y: auto;
+    }
+
+    /* Tab buttons already 44px, ensure consistent spacing */
+    .tablet-tab-button {
+        margin-bottom: 4px;
+    }
+
+    /* All nav items with adequate spacing */
+    .nav-item {
+        margin-right: 4px;
+    }
+
+    /* ─────────────────────────────────────────────────────
+       PASO 8: Tooltips & Modals Scaling (Portrait)
+       ─────────────────────────────────────────────────────*/
+
+    /* Bootstrap tooltip customization */
+    .tooltip {
+        font-size: 0.95rem;
+    }
+
+    .tooltip-inner {
+        padding: 10px 14px;
+        background-color: rgba(0, 0, 0, 0.9);
+        border-radius: 4px;
+        max-width: 250px;
+        text-align: center;
+        word-wrap: break-word;
+    }
+
+    /* Button titles (fallback for native tooltips) */
+    button[title],
+    a[title],
+    [data-bs-toggle="tooltip"] {
+        position: relative;
+    }
+
+    /* Panel de información de edificio: scaled to 60% width */
+    #panelEdificio {
+        width: 60vw;
+        max-width: 550px;
+        min-width: 280px;
+        max-height: 70vh;
+        padding: 18px;
+        border-radius: 6px;
+    }
+
+    #panelEdificio h2 {
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+    }
+
+    #panelEdificio p {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        line-height: 1.4;
+    }
+
+    #panelEdificio .btn {
+        min-height: 40px;
+        margin-top: 12px;
+    }
+
+    #cerrarPanel {
+        min-height: 32px;
+        min-width: 32px;
+        padding: 4px 8px !important;
+        font-size: 14px;
+    }
+
+    /* Overlay modals */
+    #overlay-gameover {
+        background: rgba(0, 0, 0, 0.85);
+    }
+
+    #container-config {
+        width: 60vw;
+        max-width: 500px;
+        min-width: 280px;
+        max-height: 70vh;
+        border-radius: 6px;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────
+   PASO 6: ORIENTATION SUPPORT - HORIZONTAL (LANDSCAPE)
+   768px - 1024px, Landscape orientation
+   Wider distribution: map more prominent, sidebars optimized
+   ─────────────────────────────────────────────────────────*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    /* Step 3: Prevent global horizontal scroll */
+    body {
+        overflow-x: hidden;
+    }
+
+    .game-layout {
+        display: grid;
+        grid-template-columns: 25% 50% 25%;
+        grid-template-rows: 1fr;
+        gap: 0;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        height: 100vh;
+        max-height: 100vh;
+    }
+
+    /* Left sidebar: Resources & Construction */
+    .game-layout-col--construction {
+        grid-column: 1;
+        grid-row: 1;
+        margin: 0;
+        padding: 0;
+        border: none;
+        overflow-y: auto;
+        max-height: 100vh;
+    }
+
+    .game-layout-col--construction .tablet-sidebar-section {
+        margin: 0;
+        padding: 12px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .game-layout-col--construction .card {
+        border-radius: 0;
+        margin: 0;
+    }
+
+    /* Center: Map */
+    .game-layout-col--map {
+        grid-column: 2;
+        grid-row: 1;
+        width: 100%;
+        min-width: 0;
+        overflow: hidden;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Right sidebar: Statistics, Climate & News */
+    .game-layout-col--tablet-sidebar {
+        grid-column: 3;
+        grid-row: 1;
+        width: 100%;
+        min-width: 0;
+        margin-left: 0;
+        height: 100vh;
+        max-height: 100vh;
+        overflow-y: auto;
+    }
+
+    /* Step 3: Layout distribution for landscape */
+    .tablet-map-grid-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 8px;
+        height: 100%;
+    }
+
+    /* Adjust map for landscape: more compact */
+    #mapa {
+        width: min(100%, 50vw * 0.85);
+        max-width: 100%;
+        aspect-ratio: 1 / 1;
+    }
+
+    .tablet-sidebar-card {
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+        border-left: 1px solid #ddd;
+    }
+
+    .tablet-sidebar-body {
+        flex-direction: column;
+        overflow-y: auto;
+        max-height: 100vh;
+    }
+
+    /* Step 4-5: Sidebar section ordering - Landscape */
+    .tablet-sidebar-section--resources {
+        order: 1;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 12px;
+        display: none;
+    }
+
+    .tablet-sidebar-section--resources .seccion-panel {
+        padding: 10px !important;
+    }
+
+    .tablet-sidebar-section--resources .titulo-seccion {
+        font-size: 0.7rem;
+        margin-bottom: 8px;
+    }
+
+    .tablet-sidebar-section--statistics {
+        order: 2;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 12px;
+    }
+
+    .tablet-sidebar-section--statistics .seccion-panel {
+        padding: 10px !important;
+    }
+
+    .tablet-sidebar-section--statistics .titulo-seccion {
+        font-size: 0.7rem;
+        margin-bottom: 8px;
+    }
+
+    /* Step 5: Climate & News section with tabs in landscape */
+    .tablet-sidebar-section--climate-news {
+        order: 3;
+        padding: 0;
+        overflow: hidden;
+        border-bottom: 1px solid #f0f0f0;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .tablet-sidebar-section--climate-news .tablet-climate-news-tabs {
+        margin: 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .tablet-sidebar-section--climate-news .tablet-climate-news-content {
+        overflow-y: auto;
+        flex: 1;
+        min-height: 0;
+    }
+
+    .tablet-sidebar-section--climate-news .seccion-panel {
+        padding: 10px !important;
+        margin-bottom: 0;
+    }
+
+    .tablet-sidebar-section--climate-news .titulo-seccion {
+        font-size: 0.65rem;
+        margin-bottom: 6px;
+    }
+
+    /* Compress content in landscape */
+    .tablet-sidebar-section--statistics .d-flex {
+        font-size: 0.7rem;
+        margin-bottom: 2px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       PASO 7: Touch-Friendly Buttons (Landscape)
+       ─────────────────────────────────────────────────────────*/
+
+    /* All buttons in landscape: min height 44px, adequate padding */
+    .btn {
+        min-height: 44px;
+        padding: 10px 16px !important;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Construction menu styling for landscape left sidebar */
+    .game-layout-col--construction .btn {
+        min-height: 44px;
+        padding: 12px 16px !important;
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+        border-radius: 4px;
+    }
+
+    .game-layout-col--construction .d-grid.gap-2 {
+        gap: 6px !important;
+    }
+
+    .game-layout-col--construction #menuHerramientas {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
+    /* Tab buttons in landscape */
+    .tablet-tab-button {
+        min-height: 42px;
+        padding: 10px 14px !important;
+        margin-bottom: 3px;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       PASO 8: Tooltips & Modals Scaling (Landscape)
+       ─────────────────────────────────────────────────────────*/
+
+    /* Tooltip customization for landscape */
+    .tooltip {
+        font-size: 0.9rem;
+    }
+
+    .tooltip-inner {
+        padding: 10px 14px;
+        background-color: rgba(0, 0, 0, 0.9);
+        border-radius: 4px;
+        max-width: 240px;
+        text-align: center;
+        word-wrap: break-word;
+    }
+
+    /* Panel de información de edificio: scaled for landscape (60% width) */
+    #panelEdificio {
+        width: 60vw;
+        max-width: 540px;
+        min-width: 260px;
+        max-height: 80vh;
+        padding: 16px;
+        border-radius: 6px;
+    }
+
+    #panelEdificio h2 {
+        font-size: 1.05rem;
+        margin-bottom: 10px;
+    }
+
+    #panelEdificio p {
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+        line-height: 1.3;
+    }
+
+    #panelEdificio .btn {
+        min-height: 40px;
+        margin-top: 10px;
+    }
+
+    #cerrarPanel {
+        min-height: 32px;
+        min-width: 32px;
+        padding: 4px 8px !important;
+        font-size: 14px;
+    }
+
+    /* Overlay modals */
+    #overlay-gameover {
+        background: rgba(0, 0, 0, 0.85);
+    }
+
+    #container-config {
+        width: 60vw;
+        max-width: 480px;
+        min-width: 240px;
+        max-height: 80vh;
+        border-radius: 6px;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────*/

@@ -30,8 +30,9 @@
             </div>
             <button id="btnRanking" type="button" class="btn btn-light">🏆 Mostrar ranking</button>
 
-            <div class="container-fluid d-flex mt-3">
-                <div class="col-auto me-4">
+            <div class="container-fluid d-flex mt-3 game-layout game-layout--baseline" data-layout-reference="desktop-baseline-v1">
+                <div class="col-auto me-4 game-layout-col game-layout-col--construction tablet-sidebar-construction" id="desktopConstructionPanel">
+                    <div class="tablet-sidebar-section tablet-sidebar-section--construction">
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <button class="btn btn-primary w-100 mb-2" type="button" 
@@ -111,86 +112,99 @@
                             </div>
                         </div>
                     </div>
-                </div> <!-- finalizacion container de herramientas -->
+                    </div>
+                </div> <!-- finalizacion container de herramientas desktop-->
 
-            <div id="grid-container">
-                <div id="mapa" class="mapa"></div>
-            </div>
+                <div class="game-layout-col game-layout-col--map tablet-map-column">
+                    <div id="grid-container" class="tablet-map-grid-container">
+                        <div id="mapa" class="mapa"></div>
+                    </div>
+                </div>
 
-            <!-- panel de informacion edificios (ESCONDIDO POR DEFECTO)-->
-            <div id="panelEdificio" class="panel-edificio oculto">
-                <button id="cerrarPanel" class="btn btn-danger">X</button>
+                <!-- panel de informacion edificios (ESCONDIDO POR DEFECTO)-->
+                <div id="panelEdificio" class="panel-edificio oculto">
+                    <button id="cerrarPanel" class="btn btn-danger">X</button>
 
-                <h2 id="nombreEdificio"></h2>
+                    <h2 id="nombreEdificio"></h2>
 
-                <p><b>Costo construcción:</b> <span id="costoConstruccion"></span></p>
-                <p><b>Mantenimiento:</b> <span id="costoMantenimiento"></span></p>
+                    <p><b>Costo construcción:</b> <span id="costoConstruccion"></span></p>
+                    <p><b>Mantenimiento:</b> <span id="costoMantenimiento"></span></p>
 
-                <p><b>Consume electricidad:</b> <span id="consumoElectricidad"></span></p>
-                <p><b>Consume agua:</b> <span id="consumoAgua"></span></p>
+                    <p><b>Consume electricidad:</b> <span id="consumoElectricidad"></span></p>
+                    <p><b>Consume agua:</b> <span id="consumoAgua"></span></p>
 
-                <p><b>Tipo producción:</b> <span id="tipoProduccion"></span></p>
-                <p><b>Produce:</b> <span id="produccion"></span></p>
+                    <p><b>Tipo producción:</b> <span id="tipoProduccion"></span></p>
+                    <p><b>Produce:</b> <span id="produccion"></span></p>
 
-                <p><b>Capacidad:</b> <span id="capacidad"></span></p>
-                <p><b>Ocupación:</b> <span id="ocupacion"></span></p>
+                    <p><b>Capacidad:</b> <span id="capacidad"></span></p>
+                    <p><b>Ocupación:</b> <span id="ocupacion"></span></p>
 
-                <button id="btnDemolerPanel">Destruir Edificio</button>
-            
-            </div>
+                    <button id="btnDemolerPanel">Destruir Edificio</button>
+                </div>
 
-            <div class="col-auto ms-4">
-                <div class="card shadow-sm panel-derecho">
-                    <div class="card-body p-0 d-flex flex-column">
+                <div class="col-auto ms-4 game-layout-col game-layout-col--tablet-sidebar tablet-sidebar-column">
+                    <div class="card shadow-sm panel-derecho tablet-sidebar-card">
+                        <div class="card-body p-0 d-flex flex-column tablet-sidebar-body">
 
-                        <!-- div de estadisticas -->
-                        <div class="seccion-panel p-3">
-                            <h6 class="titulo-seccion">Estadísticas</h6>
-                            <div id="estadisticas-contenido">
-                                <div class="list-group list-group-flush">
-                                    <div class="puntaje-container d-flex justify-content-between align-items-center">
-                                        <span class="text-muted small">Puntaje</span>
-                                        <span id="puntaje">0</span>
-                                        <!-- Panel flotante -->
-                                            <div class="panel-desglose" id="panelDesglose">
-                                                <div class="titulo">Desglose</div>
-                                                <div>bal. Población: <span id="d-poblacion"></span></div>
-                                                <div>bal. Felicidad: <span id="d-felicidad"></span></div>
-                                                <div>bal. Dinero: <span id="d-dinero"></span></div>
-                                                <div>bal. Edificios: <span id="d-edificios"></span></div>
-                                                <div>bal. Recursos: <span id="d-recursos"></span></div>
+                            <div class="tablet-sidebar-section tablet-sidebar-section--resources">
+                                <div class="seccion-panel p-3">
+                                    <h6 class="titulo-seccion">Estadísticas</h6>
+                                    <div id="estadisticas-contenido">
+                                        <div class="list-group list-group-flush">
+                                            <div class="puntaje-container d-flex justify-content-between align-items-center">
+                                                <span class="text-muted small">Puntaje</span>
+                                                <span id="puntaje">0</span>
+                                                <!-- Panel flotante -->
+                                                    <div class="panel-desglose" id="panelDesglose">
+                                                        <div class="titulo">Desglose</div>
+                                                        <div>bal. Población: <span id="d-poblacion"></span></div>
+                                                        <div>bal. Felicidad: <span id="d-felicidad"></span></div>
+                                                        <div>bal. Dinero: <span id="d-dinero"></span></div>
+                                                        <div>bal. Edificios: <span id="d-edificios"></span></div>
+                                                        <div>bal. Recursos: <span id="d-recursos"></span></div>
 
-                                                <hr>
+                                                        <hr>
 
-                                                <div class="text-success">Bonificaciones: <span id="d-bonificaciones"></span></div>
-                                                <div class="text-danger">Penalizaciones: <span id="d-penalizaciones"></span></div>
+                                                        <div class="text-success">Bonificaciones: <span id="d-bonificaciones"></span></div>
+                                                        <div class="text-danger">Penalizaciones: <span id="d-penalizaciones"></span></div>
 
-                                                <hr>
+                                                        <hr>
 
-                                                <div class="fw-bold">Total: <span id="d-total"></span></div>
+                                                        <div class="fw-bold">Total: <span id="d-total"></span></div>
+                                                    </div>
                                             </div>
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <span class="text-muted small">Dinero</span>
+                                                <span id="dinero" class="fw-bold">500000</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <span class="text-muted small">Agua</span>
+                                                <span id="totalAgua" class="fw-bold">0</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <span class="text-muted small">Comida</span>
+                                                <span id="totalAlimento">0</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-muted small">electricidad:</span>
+                                                <span id="totalElectricidad">0</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-muted small">Felicidad:</span>
+                                                <span id="promedioFelicidad">0</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="text-muted small">Dinero</span>
-                                        <span id="dinero" class="fw-bold">500000</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="text-muted small">Agua</span>
-                                        <span id="totalAgua" class="fw-bold">0</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="text-muted small">Comida</span>
-                                        <span id="totalAlimento">0</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="text-muted small">electricidad:</span>
-                                        <span id="totalElectricidad">0</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="text-muted small">Felicidad:</span>
-                                        <span id="promedioFelicidad">0</span>
-                                    </div>
-                                    <!-- contadores -->
+                                </div>
+                            </div>
+
+                            <div class="tablet-sidebar-section tablet-sidebar-section--construction" id="tabletConstructionSection" style="display: none;">
+                                <!-- Placeholder: Construction section will be displayed on tablet via CSS -->
+                            </div>
+
+                            <div class="tablet-sidebar-section tablet-sidebar-section--statistics">
+                                <div class="seccion-panel p-3 border-top">
+                                    <h6 class="titulo-seccion">Contadores</h6>
                                     <div class="mt-2 pt-2 border-top">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span class="text-muted small fw-bold">Total Residenciales</span>
@@ -246,43 +260,64 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            </div>
 
-                        <!-- div de clima -->
-                        <div class="seccion-panel border-bottom p-3">
-                            <h6 class="titulo-seccion mb-3">Clima Actual</h6>
-                            <div id="clima-contenido">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <h3 id="clima-temp" class="fw-bold mb-0 text-primary">--°C</h3>
-                                    <img id="clima-icono" src="" alt="clima" class="clima-img">
-                                </div>
-                        
-                                <div id="clima-condicion" class="text-capitalize fw-semibold mb-3 small text-secondary">
-                                    Cargando...
-                                </div>
-                        
-                                <div class="list-group list-group-flush border-top pt-2">
-                                    <div class="clima-detalle">
-                                        <span class="text-muted small">Humedad</span>
-                                        <span id="clima-humedad" class="clima-valor">--%</span>
+                            <div class="tablet-sidebar-section tablet-sidebar-section--climate-news">
+                                <!-- Tabs for Climate and News - touch-friendly for tablet -->
+                                <ul class="nav nav-tabs tablet-climate-news-tabs" id="climateNewsTabs" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active tablet-tab-button" id="climate-tab" data-bs-toggle="tab" data-bs-target="#climate-pane" type="button" role="tab" aria-controls="climate-pane" aria-selected="true">
+                                            Clima
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link tablet-tab-button" id="news-tab" data-bs-toggle="tab" data-bs-target="#news-pane" type="button" role="tab" aria-controls="news-pane" aria-selected="false">
+                                            Noticias
+                                        </button>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content tablet-climate-news-content" id="climateNewsTabContent">
+                                    <!-- Climate Tab -->
+                                    <div class="tab-pane fade show active" id="climate-pane" role="tabpanel" aria-labelledby="climate-tab">
+                                        <div class="seccion-panel p-3">
+                                            <div id="clima-contenido">
+                                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                                    <h3 id="clima-temp" class="fw-bold mb-0 text-primary">--°C</h3>
+                                                    <img id="clima-icono" src="" alt="clima" class="clima-img">
+                                                </div>
+
+                                                <div id="clima-condicion" class="text-capitalize fw-semibold mb-3 small text-secondary">
+                                                    Cargando...
+                                                </div>
+
+                                                <div class="list-group list-group-flush border-top pt-2">
+                                                    <div class="clima-detalle">
+                                                        <span class="text-muted small">Humedad</span>
+                                                        <span id="clima-humedad" class="clima-valor">--%</span>
+                                                    </div>
+                                                    <div class="clima-detalle">
+                                                        <span class="text-muted small">Viento</span>
+                                                        <span id="clima-viento" class="clima-valor">-- m/s</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="clima-detalle">
-                                        <span class="text-muted small">Viento</span>
-                                        <span id="clima-viento" class="clima-valor">-- m/s</span>
+
+                                    <!-- News Tab -->
+                                    <div class="tab-pane fade" id="news-pane" role="tabpanel" aria-labelledby="news-tab">
+                                        <div class="seccion-panel p-3">
+                                            <div id="noticias-contenido">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-            
-                        <!-- div de noticias -->
-                        <div class="seccion-panel border-bottom p-3">
-                            <h6 class="titulo-seccion">Noticias</h6>
-                            <div id="noticias-contenido">
-                                </div>
-                        </div>
-            
                     </div>
                 </div>
+            </div>
             
             <script type="module" src="../../negocio/controladorJuego.js"></script>
             <script type="module" src="../../negocio/controladorRutas.js"></script>
