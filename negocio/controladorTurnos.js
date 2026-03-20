@@ -27,12 +27,14 @@ const CONFIG_TURNOS_DEFECTO = Object.freeze({
 export class controladorTurnos {
 	#juego;
 	#controladorCiudadanos;
+	#controladorPuntuacion;
 	#onActualizacion;
 	#intervalId;
 	#pausado;
 	#config;
+	#alertasActivas = new Set();
 
-	constructor(juego, controladorCiudadanos, onActualizacion, config = {}) {
+	constructor(juego, controladorCiudadanos, controladorPuntuacion, onActualizacion, config = {}) {
 		if (!(juego instanceof Juego)) {
 			throw new Error("controladorTurnos requiere una instancia valida de Juego");
 		}
@@ -42,6 +44,13 @@ export class controladorTurnos {
 			onActualizacion = controladorCiudadanos;
 			controladorCiudadanos = null;
 		}
+
+		// if (
+		// 	controladorPuntuacion !== null &&
+		// 	controladorPuntuacion !== undefined
+		// ) {
+		// 	throw new Error("error controladorPuntuacion");
+		// }
 
 		if (typeof onActualizacion !== "function") {
 			throw new Error("onActualizacion debe ser una funcion");
@@ -61,6 +70,7 @@ export class controladorTurnos {
 
 		this.#juego = juego;
 		this.#controladorCiudadanos = controladorCiudadanos ?? null;
+		this.#controladorPuntuacion = controladorPuntuacion ?? null;
 		this.#onActualizacion = onActualizacion;
 		this.#intervalId = null;
 		this.#pausado = false;
@@ -117,6 +127,7 @@ export class controladorTurnos {
 	const { celdas } = ciudad.mapa;
 	const { economia } = ciudad;
 	const estadoRecursosInicio = this._obtenerEstadoRecursosInicio(economia);
+	let resumenMigracion = null;
 
 	let totals = {
 		produccionElectricidad: 0,
@@ -149,25 +160,25 @@ export class controladorTurnos {
 	// 5) Procesar felicidad y poblacion.
 	if (this.#controladorCiudadanos) {
 		this.#controladorCiudadanos.procesarTurno();
+		if (typeof this.#controladorCiudadanos.obtenerResumenMigracionTurno === "function") {
+			resumenMigracion = this.#controladorCiudadanos.obtenerResumenMigracionTurno();
+			this._mostrarNotificacionesMigracion(resumenMigracion);
+		}
 	} else {
 		this._aplicarFelicidadCiudadanos(totals.beneficioFelicidadTotal);
 	}
 
 	// 6) Notificaciones.
-	const alertas = this._verificarAlertas(economia);
+	this._verificarAlertas(economia);
 
 	this.#juego.turnoActual++;
 
-	const balance = (
-		totals.produccionElectricidad +
-		totals.produccionAgua +
-		totals.produccionAlimento +
-		totals.ingresoTotal
-	) - (
-		totals.consumoElectricidad +
-		totals.consumoAgua +
-		totals.consumoAlimento
-	);
+	//me retorna el desglose
+	const desglose = this.#controladorPuntuacion
+		? this.#controladorPuntuacion.calcularPuntuacion()
+		: { puntuacion: 0 };
+	
+	const score = desglose.puntuacion;
 
 	const estadisticasCiudadanos = this.#controladorCiudadanos && typeof this.#controladorCiudadanos.obtenerEstadisticas === "function"
 		? this.#controladorCiudadanos.obtenerEstadisticas()
@@ -184,9 +195,10 @@ export class controladorTurnos {
 		ingresoTotal: totals.ingresoTotal,
 		beneficioFelicidadTotal: totals.beneficioFelicidadTotal,
 		mantenimientoTotal: totals.mantenimiento,
-		balance,
+		score,
+		desglose,
 		estadisticasCiudadanos,
-		alertas
+		resumenMigracion
 	});
 	}
 
@@ -334,32 +346,113 @@ export class controladorTurnos {
 	}
 
 	_verificarAlertas(economia){
-		const alertas = [];
+	const nuevasAlertas = new Set();
 
-		if(economia.electricidad === 0){
-			alertas.push("¡Alerta! Te has quedado sin electricidad");
+	if(economia.electricidad === 0){
+		nuevasAlertas.add("electricidad");
+		this._mostrarAlertaToast("¡Alerta! Te has quedado sin electricidad");
+		// this._emitirSiEsNueva("electricidad", "¡Alerta! Te has quedado sin electricidad");
+	}
+
+	if(economia.agua === 0){
+		nuevasAlertas.add("agua");
+		this._mostrarAlertaToast("¡Alerta! Te has quedado sin agua");
+		// this._emitirSiEsNueva("agua", "¡Alerta! Te has quedado sin agua");
+	}
+
+	if((economia.alimento || 0) === 0){
+		nuevasAlertas.add("alimento");
+		this._mostrarAlertaToast("¡Alerta! Te has quedado sin alimentos");
+		// this._emitirSiEsNueva("alimento", "¡Alerta! Te has quedado sin alimentos");
+	}
+
+	if(economia.dinero <= 0){
+		nuevasAlertas.add("dinero");
+		this._mostrarAlertaToast("¡Alerta! Te has quedado sin dinero");
+		// this._emitirSiEsNueva("dinero", "¡Alerta! Te has quedado sin dinero");
+	}
+
+	if(this.#controladorCiudadanos){
+		const stats = this.#controladorCiudadanos.obtenerEstadisticas();
+
+		if(stats.felicidadPromedio <= 20){
+			nuevasAlertas.add("felicidad");
+			this._mostrarAlertaToast("😡 Ciudadanos infelices");
+			// this._emitirSiEsNueva("felicidad", "😡 Ciudadanos infelices");
+		}
+	}
+
+	// Actualizamos estado
+	this.#alertasActivas = nuevasAlertas;
+}
+
+	_emitirSiEsNueva(tipo, mensaje){
+		if(!this.#alertasActivas.has(tipo)){
+			this._mostrarAlertaToast(mensaje);
+		}
+	}
+
+	_mostrarNotificacionesMigracion(resumenMigracion) {
+		if (!resumenMigracion || !Array.isArray(resumenMigracion.mensajes)) {
+			return;
 		}
 
-		if(economia.agua === 0){
-			alertas.push("¡Alerta! Te has quedado sin agua");
+		resumenMigracion.mensajes.forEach((mensaje) => {
+			const tipo = this._clasificarTipoAlertaMigracion(mensaje);
+			this._mostrarAlertaToast(mensaje, 3500, tipo);
+		});
+	}
+
+	_clasificarTipoAlertaMigracion(mensaje) {
+		if (typeof mensaje !== "string") {
+			return "normal";
 		}
 
-		if((economia.alimento || 0) === 0){
-			alertas.push("¡Alerta! Te has quedado sin alimentos");
+		if (mensaje.includes("CRISIS")) {
+			return "crisis";
 		}
 
-		if(economia.dinero <= 0){
-			alertas.push("¡Alerta! Te has quedado sin dinero");
+		if (mensaje.includes("✅") || /inmigr/i.test(mensaje)) {
+			return "inmigracion";
 		}
 
-		if(this.#controladorCiudadanos){
-			const stats = this.#controladorCiudadanos.obtenerEstadisticas();
-
-			if(stats.felicidadPromedio <= 20){
-				alertas.push("😡 Ciudadanos infelices");
-			}
+		if (mensaje.includes("❌") || /emigr/i.test(mensaje)) {
+			return "emigracion";
 		}
 
-		return alertas;
+		return "normal";
+	}
+
+	_mostrarAlertaToast(mensaje, duracion = 3000, tipo = "normal") {
+		const contenedor = document.getElementById("contenedor-alertas");
+		if (!contenedor) return;
+
+		const alerta = document.createElement("div");
+		alerta.classList.add("alerta-toast");
+		if (tipo === "inmigracion") {
+			alerta.classList.add("alerta-toast--inmigracion");
+		} else if (tipo === "emigracion") {
+			alerta.classList.add("alerta-toast--emigracion");
+		} else if (tipo === "crisis") {
+			alerta.classList.add("alerta-toast--crisis");
+		}
+		alerta.textContent = mensaje;
+
+		contenedor.appendChild(alerta);
+
+		// Forzar reflow para animación
+		requestAnimationFrame(() => {
+			alerta.classList.add("mostrar");
+		});
+
+		// Ocultar después de X tiempo
+		setTimeout(() => {
+			alerta.classList.remove("mostrar");
+			alerta.classList.add("ocultar");
+
+			setTimeout(() => {
+				alerta.remove();
+			}, 300);
+		}, duracion);
 	}
 }

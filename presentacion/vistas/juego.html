@@ -9,9 +9,9 @@
             <link rel="stylesheet" type="text/css" href="../estilos/juego.css">
         </head>
         <body>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm py-1">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm py-1 d-lg-none">
                 <div class="container-fluid">
-                    <span class="navbar-brand fs-6 fw-bold text-warning">💰 <span id="dinero">500000</span></span>
+                    <span class="navbar-brand fs-6 fw-bold text-warning">💰 <span id="dinero-m">500000</span></span>
                     
                     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#recursosDetalle">
                         <span class="navbar-toggler-icon" style="width: 1.2em; height: 1.2em;"></span>
@@ -19,15 +19,24 @@
             
                     <div class="collapse navbar-collapse" id="recursosDetalle">
                         <ul class="navbar-nav ms-auto align-items-center flex-row flex-wrap justify-content-center">
-                            <li class="nav-item px-2 text-white small">💧 Agua: <span id="totalAgua" class="fw-bold">0</span></li>
-                            <li class="nav-item px-2 text-white small">⚡ Luz: <span id="totalElectricidad" class="fw-bold">0</span></li>
-                            <li class="nav-item px-2 text-white small">🍎 Comida: <span id="totalAlimento" class="fw-bold">0</span></li>
-                            <li class="nav-item px-2 text-white small">😊 Felicidad: <span id="promedioFelicidad" class="fw-bold">0</span>%</li>
-                            <li class="nav-item px-2 text-white small border-start ms-2 d-none d-lg-block">🏆 <span id="puntaje">0</span></li>
+                            <li class="nav-item px-2 text-white small">💧 Agua: <span id="totalAgua-m" class="fw-bold">0</span></li>
+                            <li class="nav-item px-2 text-white small">⚡ Luz: <span id="totalElectricidad-m" class="fw-bold">0</span></li>
+                            <li class="nav-item px-2 text-white small">🍎 Comida: <span id="totalAlimento-m" class="fw-bold">0</span></li>
+                            <li class="nav-item px-2 text-white small">😊 Felicidad: <span id="promedioFelicidad-m" class="fw-bold">0</span>%</li>
+                            <li class="nav-item px-2 text-white small">🏆 Puntaje <span id="puntaje-pc">0</span></li>
                         </ul>
                     </div>
                 </div>
             </nav>
+            <!-- game over oculto -->
+            <div id="overlay-gameover" class="oculto">
+                <div id="panel-gameover" class="panel">
+                    <h2>💀 GAME OVER</h2>
+                    <p>Tu ciudad ha colapsado por mala gestión.</p>
+                </div>
+            </div>
+
+            <div id="contenedor-alertas" class="contenedor-alertas"></div>
             <h3 id="nombreCiudad" class="text-center my-4"> Una ciudad </h3>
             <button id="pausado" type="button" class="btn btn-secondary">⏸ Pausar</button>
             <div id="container-config" class="oculto">
@@ -155,33 +164,51 @@
                     <div class="card-body p-0 d-flex flex-column">
 
                         <!-- div de estadisticas -->
-                        <div class="seccion-panel p-3">
+                        <div class="seccion-panel p-3 d-none d-md-block" >
                             <h6 class="titulo-seccion">Estadísticas</h6>
                             <div id="estadisticas-contenido">
                                 <div class="list-group list-group-flush">
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <div class="puntaje-container d-flex justify-content-between align-items-center">
                                         <span class="text-muted small">Puntaje</span>
-                                        <span id="puntaje">0</span>
+                                        <span id="puntaje-pc">0</span>
+                                        <!-- Panel flotante -->
+                                            <div class="panel-desglose" id="panelDesglose">
+                                                <div class="titulo">Desglose</div>
+                                                <div>bal. Población: <span id="d-poblacion"></span></div>
+                                                <div>bal. Felicidad: <span id="d-felicidad"></span></div>
+                                                <div>bal. Dinero: <span id="d-dinero"></span></div>
+                                                <div>bal. Edificios: <span id="d-edificios"></span></div>
+                                                <div>bal. Recursos: <span id="d-recursos"></span></div>
+
+                                                <hr>
+
+                                                <div class="text-success">Bonificaciones: <span id="d-bonificaciones"></span></div>
+                                                <div class="text-danger">Penalizaciones: <span id="d-penalizaciones"></span></div>
+
+                                                <hr>
+
+                                                <div class="fw-bold">Total: <span id="d-total"></span></div>
+                                            </div>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span class="text-muted small">Dinero</span>
-                                        <span id="dinero" class="fw-bold">500000</span>
+                                        <span id="dinero-pc" class="fw-bold">500000</span>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span class="text-muted small">Agua</span>
-                                        <span id="totalAgua" class="fw-bold">0</span>
+                                        <span id="totalAgua-pc" class="fw-bold">0</span>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span class="text-muted small">Comida</span>
-                                        <span id="totalAlimento">0</span>
+                                        <span id="totalAlimento-pc">0</span>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <span class="text-muted small">electricidad:</span>
-                                        <span id="totalElectricidad">0</span>
+                                        <span id="totalElectricidad-pc">0</span>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <span class="text-muted small">Felicidad:</span>
-                                        <span id="promedioFelicidad">0</span>
+                                        <span id="promedioFelicidad-pc">0</span>
                                     </div>
                                     <!-- contadores -->
                                     <div class="mt-2 pt-2 border-top">
