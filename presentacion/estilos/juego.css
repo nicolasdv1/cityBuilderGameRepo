@@ -9,12 +9,21 @@ body{
     cursor: url("/textures/hammer1redim.png"), auto;
 }
 
-#mapa{
+#mapa {
     display: grid;
     gap: 2px;
-
-    width: min(800px, 80vw);
+    /* Quitamos el width fijo de aquí para manejarlo con mayor precisión */
+    width: 100%; 
+    max-width: 800px; /* Límite para pantallas grandes */
     aspect-ratio: 1 / 1;
+    margin: 0 auto; /* Centrarlo */
+}
+
+.map-container-responsive {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0; /* Importante para el 100% real */
 }
 
 #nombreCiudad{
@@ -260,6 +269,8 @@ body{
     width: 250px; 
     min-height: 400px;
     background-color: #ffffff;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .seccion-panel:hover {
@@ -390,4 +401,70 @@ body{
     color: #495057;
     font-weight: 800;
     margin-bottom: 15px;
+}
+
+/* --- RESPONSIVE: MÓVIL --- */
+@media (max-width: 767.98px) {
+    #mapa {
+        max-width: 100%; 
+        width: 100vw;    
+        border-radius: 0; 
+        gap: 1px;        
+    }
+
+    .container-fluid.d-flex {
+        flex-direction: column !important; 
+        padding: 0; 
+    }
+
+    body {
+        padding: 0;
+        overflow-x: hidden; 
+    }
+
+    .panel-derecho {
+        width: 100% !important; 
+        margin-left: 0 !important;
+        margin-top: 20px;
+        min-height: auto; 
+    }
+
+    .col-auto {
+        width: 100% !important;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+
+    .me-4, .ms-4 {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+        margin-bottom: 15px; 
+    }
+    .construction-menu {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999; /* Máxima prioridad */
+        background: white;
+        box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
+        border-radius: 15px 15px 0 0;
+    }
+
+    /* Scroll interno para no ocupar toda la pantalla */
+    .menu-scrollable {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    /* Estilo para los botones tipo Tab */
+    .nav-pills .nav-link.active {
+        background-color: #0d6efd;
+        color: white;
+    }
+    
+    .nav-pills .nav-link {
+        color: #555;
+        border-radius: 0;
+    }
 }
